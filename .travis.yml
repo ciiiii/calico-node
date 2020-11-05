@@ -1,0 +1,13 @@
+dist: bionic
+sudo: required
+language: generic
+services:
+  - docker
+
+before_script:
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+scipt:
+  - make calico/node
+  - docker tag calico/node:latest-amd64 killercai/calico.node:$TRAVIS_COMMIT
+  - docker push killercai/calico.node:$TRAVIS_COMMIT
